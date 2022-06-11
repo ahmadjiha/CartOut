@@ -7,9 +7,6 @@ import EditForm from "./EditForm";
 const EditableProduct = ({ product, deleteFromItems, cartItems, setCartItems }) => {
   const [product2, setProduct] = useState(product)
   const [editFormVisible, setEditFormVisible] = useState(false);
-  // const [title, setTitle] = useState(product.title)
-  // const [quantity, setQuantity] = useState(product.quantity)
-  // const [price, setPrice] = useState(product.price) 
 
   return (
     <div className="product">

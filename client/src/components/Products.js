@@ -1,8 +1,23 @@
-import EditableProduct from "./EditableProduct"
-import { useSelector, useDispatch } from "react-redux"
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+
+import EditableProduct from "./EditableProduct";
+import { productsReceived } from "../actions/productsActions";
+
+
 const Products = ({ cartItems, setCartItems }) => {
-  const products = useSelector(state => state.products);
-  console.log(products);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const { data } = await axios.get('http://localhost:5001/api/products');
+      dispatch(productsReceived(data));
+    }
+
+    getProducts();
+  }, [dispatch]);
 
   return (
     <div className="product-listing">
@@ -12,7 +27,6 @@ const Products = ({ cartItems, setCartItems }) => {
         setCartItems={setCartItems}
         key={product._id} 
         product={product}
-        // deleteFromItems={deleteFromItems} 
       />))}
     </div>
   )
