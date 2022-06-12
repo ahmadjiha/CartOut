@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Cart from "./Cart";
 import Products from "./Products";
-import AddProduct from "./AddProduct";
+import AddProductForm from "./AddProductForm";
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -38,7 +38,7 @@ const App = () => {
       </header>
       <main>
       <Products products={items} deleteFromItems={deleteFromItems} cartItems={cartItems} setCartItems={setCartItems} />
-      <AddProduct items={items} setItems={setItems} />
+      <AddProductForm items={items} setItems={setItems} />
       </main>
     </div>
   );
