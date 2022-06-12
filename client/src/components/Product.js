@@ -1,7 +1,4 @@
 import axios from "axios";
-import { deleteProductFromStore, decrementStock } from "../actions/productsActions";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../actions/cartActions";
 
 const Product = ({
   product: {title, price, quantity, _id},
@@ -10,8 +7,6 @@ const Product = ({
   cartItems,
   setCartItems,
   setProduct }) => {
-
-  const dispatch = useDispatch();
 
   const getAddToCartButtonClass = () => {
     if (quantity > 0) {
@@ -28,14 +23,14 @@ const Product = ({
 
   const deleteProduct = async () => {
     const deleteOutput = await axios.delete("/api/products/" + _id)
-    return deleteOutput;
+    return deleteOutput
   }
 
-  const handleDeleteClick = async (e) => {
+  const handleDeleteClick = (e) => {
     e.preventDefault()
     try {
-      await deleteProduct()
-      dispatch(deleteProductFromStore(_id))
+      deleteProduct()
+      deleteFromItems(_id)
     } catch (err) {
       console.log("delete failed: ", err)
       alert("delete failed")
@@ -53,7 +48,18 @@ const Product = ({
 
     try {
       const postOutput = await addProductToCart();
-      dispatch(addToCart(postOutput.item, postOutput.product._id));
+      if (cartItems.some(item => item._id === postOutput.item._id)) {
+        setCartItems(cartItems.map(item => {
+                if (item._id === postOutput.item._id) {
+                  item.quantity += 1;
+                }
+      
+                return item
+              }))
+      } else {
+        setCartItems(cartItems.concat(postOutput.item));
+      }
+      setProduct(postOutput.product)
     } catch (err) {
       console.log("Update cart item failed", err);
       alert("Update cart item failed");

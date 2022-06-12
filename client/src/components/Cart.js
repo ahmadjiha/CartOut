@@ -1,34 +1,18 @@
 import Item from './Item';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { checkoutCart, cartItemsReceived } from '../actions/cartActions';
 
-const getCartTotal = (items) => items.reduce((prev, curr) => prev + curr.price * curr.quantity, 0);
+const getCartTotal = (items) => items.reduce((prev, curr) => prev + curr.price * curr.quantity, 0)
 
-const Cart = () => {
-  const dispatch = useDispatch();
-  const cart = useSelector(state => state.cart)
-
-  useEffect(() => {
-    const getCart = async () => {
-      const { data } = await axios.get('http://localhost:5001/api/cart');
-      dispatch(cartItemsReceived(data));
-    }
-
-    getCart();
-  }, [dispatch]);
-
+const Cart = ({ cartItems, setCartItems }) => {
   const checkout = async () => {
     const deletedItems = await axios.post("/api/checkout")
     return deletedItems
   }
-  
   const handleCheckout = async (e) => {
     e.preventDefault();
     try {
-      await checkout() 
-      dispatch(checkoutCart());
+      const resp = await checkout() 
+      setCartItems([])
     } catch (err) {
       console.log("checkout failed: ", err)
       alert("Checkout failed")
@@ -36,7 +20,7 @@ const Cart = () => {
   }
 
   const checkoutButtonClass = () => {
-    if (cart.length > 0) {
+    if (cartItems.length > 0) {
       return 'button checkout'
     }
     return 'button checkout disabled'
@@ -45,14 +29,14 @@ const Cart = () => {
   return ( 
     <div className='cart'>
       <h2>Your Cart</h2>
-      {cart.length === 0 &&
+      {cartItems.length === 0 &&
       <>
         <p>Your cart is empty</p>
         <br />
         <p>Total: $0</p>
       </>
       }
-      {cart.length > 0 &&
+      {cartItems.length > 0 &&
       <table className='cart-items'>
         <tbody>
           <tr>
@@ -60,11 +44,11 @@ const Cart = () => {
             <th>Quantity</th>
             <th>Price</th>
           </tr>
-            {cart.map( item => (
+            {cartItems.map( item => (
               <Item key={item._id} title={item.title} quantity={item.quantity} price={item.price} />
             ))}
           <tr>
-            <td colSpan="3" className="total">Total: ${getCartTotal(cart)}</td>
+            <td colSpan="3" className="total">Total: ${getCartTotal(cartItems)}</td>
           </tr>
         </tbody>
       </table>

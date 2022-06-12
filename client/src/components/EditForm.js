@@ -1,8 +1,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { updateProductInStore } from '../actions/productsActions';
+
 
 const EditForm = ({ 
   product: {
@@ -14,12 +13,13 @@ const EditForm = ({
   setProduct,
   editFormVisible, 
   setEditFormVisible 
-}) => {
+}) => 
+{
   const [itemTitle, setItemTitle] = useState(title);
   const [itemPrice, setItemPrice] = useState(price);
   const [itemQuantity, setItemQuantity] = useState(quantity);
 
-  const dispatch = useDispatch();
+
   
   const editFormDisplayValue = () => {
     return editFormVisible ? "" : "none";
@@ -54,17 +54,17 @@ const EditForm = ({
     return update 
   }
   
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
     try {
-      await updateItem();
+      updateItem()
+      setEditFormVisible(false)
       let newProduct = {
         title: itemTitle,
         price: itemPrice,
         quantity: itemQuantity,
         _id: _id
-      };
-      dispatch(updateProductInStore(newProduct))
-      setEditFormVisible(false)
+      }
+      setProduct(newProduct)
     } catch (err) {
       console.log("updateItem failed", err)
       alert("sorry your update failed because because")
