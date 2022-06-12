@@ -5,12 +5,7 @@ import axios from 'axios';
 import { productUpdated } from '../actions/productActions';
 
 const EditForm = ({ 
-  product: {
-    title,
-    quantity,
-    price,
-    _id    
-  },
+  product: { title, quantity, price, _id },
   editFormVisible, 
   setEditFormVisible 
 }) => {

@@ -5,25 +5,28 @@ import axios from 'axios';
 import CartItem from './CartItem';
 import { cartItemsReceived, cartItemsCheckout } from '../actions/cartActions';
 
-const getCartTotal = (items) => items.reduce((prev, curr) => prev + curr.price * curr.quantity, 0);
-
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(state => state.cartItems);
-
+  
   useEffect(() => {
     const getCartItems = async () => {
       const { data } = await axios.get('http://localhost:5001/api/cart');
       dispatch(cartItemsReceived(data));
     }
-
+    
     getCartItems();
   }, [dispatch]);
+  
+  const getCartTotal = cartItems => {
+    const cartTotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return cartTotal.toFixed(2);
+  }
 
   const checkout = async () => {
     const deletedItems = await axios.post('/api/checkout');
     return deletedItems;
-  }
+  };
   
   const handleCheckout = async (e) => {
     e.preventDefault();
@@ -34,14 +37,14 @@ const Cart = () => {
       console.log('checkout failed: ', err);
       alert('Checkout failed');
     }
-  }
+  };
 
   const checkoutButtonClass = () => {
     if (cartItems.length > 0) {
       return 'button checkout';
     }
     return 'button checkout disabled';
-  }
+  };
 
   return ( 
     <div className='cart'>
