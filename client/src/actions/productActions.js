@@ -20,3 +20,10 @@ export const productUpdated = updatedProduct => {
     payload: updatedProduct
   };
 };
+
+export const newProductCreated = newProduct => {
+  return {
+    type: 'NEW_PRODUCT_CREATED',
+    payload: newProduct
+  };
+};

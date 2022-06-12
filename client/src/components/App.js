@@ -6,7 +6,6 @@ import Products from './Products';
 import AddProductForm from './AddProductForm';
 
 const App = () => {
-  const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
   return (
@@ -17,7 +16,7 @@ const App = () => {
       </header>
       <main>
       <Products cartItems={cartItems} setCartItems={setCartItems} />
-      <AddProductForm items={items} setItems={setItems} />
+      <AddProductForm />
       </main>
     </div>
   );

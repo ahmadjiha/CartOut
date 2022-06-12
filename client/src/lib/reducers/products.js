@@ -16,6 +16,9 @@ const products = (state=[], action) => {
         return product;
       });
     }
+    case 'NEW_PRODUCT_CREATED': {
+      return state.concat(action.payload);
+    }
     default: {
       return state;
     }
