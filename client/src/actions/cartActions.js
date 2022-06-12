@@ -4,3 +4,10 @@ export const cartItemsReceived = (cartItems) => {
     payload: cartItems
   };
 };
+
+export const cartItemsCheckout = (cartItems) => {
+  return {
+    type: 'CART_ITEMS_CHECKOUT',
+    payload: cartItems
+  };
+};

@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import CartItem from './CartItem';
-import { cartItemsReceived } from '../actions/cartActions';
+import { cartItemsReceived, cartItemsCheckout } from '../actions/cartActions';
 
-const getCartTotal = (items) => items.reduce((prev, curr) => prev + curr.price * curr.quantity, 0)
+const getCartTotal = (items) => items.reduce((prev, curr) => prev + curr.price * curr.quantity, 0);
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -21,26 +21,26 @@ const Cart = () => {
   }, [dispatch]);
 
   const checkout = async () => {
-    const deletedItems = await axios.post("/api/checkout")
-    return deletedItems
+    const deletedItems = await axios.post('/api/checkout');
+    return deletedItems;
   }
   
   const handleCheckout = async (e) => {
     e.preventDefault();
     try {
-      await checkout()
-      // setCartItems([])
+      await checkout();
+      dispatch(cartItemsCheckout([]));
     } catch (err) {
-      console.log("checkout failed: ", err)
-      alert("Checkout failed")
+      console.log('checkout failed: ', err);
+      alert('Checkout failed');
     }
   }
 
   const checkoutButtonClass = () => {
     if (cartItems.length > 0) {
-      return 'button checkout'
+      return 'button checkout';
     }
-    return 'button checkout disabled'
+    return 'button checkout disabled';
   }
 
   return ( 
@@ -65,14 +65,14 @@ const Cart = () => {
               <CartItem key={item._id} title={item.title} quantity={item.quantity} price={item.price} />
             ))}
           <tr>
-            <td colSpan="3" className="total">Total: ${getCartTotal(cartItems)}</td>
+            <td colSpan='3' className='total'>Total: ${getCartTotal(cartItems)}</td>
           </tr>
         </tbody>
       </table>
       }
-      <a href="/#" className={checkoutButtonClass()} onClick={handleCheckout}>Checkout</a>
+      <a href='/#' className={checkoutButtonClass()} onClick={handleCheckout}>Checkout</a>
     </div> 
   );
-}
+};
 
 export default Cart;

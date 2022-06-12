@@ -8,6 +8,6 @@ const CartItem = ({ title, quantity, price }) => {
       <td>{price}</td>
     </tr>
   );
-}
+};
 
 export default CartItem;
