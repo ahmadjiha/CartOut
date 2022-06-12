@@ -3,7 +3,7 @@ import Product from './Product';
 import EditForm from './EditForm';
 
 const EditableProduct = ({ product, cartItems, setCartItems }) => {
-  const [product2, setProduct] = useState(product);
+  // const [product2, setProduct] = useState(product);
   const [editFormVisible, setEditFormVisible] = useState(false);
 
   return (
@@ -13,11 +13,10 @@ const EditableProduct = ({ product, cartItems, setCartItems }) => {
         setEditFormVisible={setEditFormVisible} 
         setCartItems={setCartItems}
         cartItems={cartItems}
-        setProduct={setProduct}
+        // setProduct={setProduct}
       />
       <EditForm  
         product={product}
-        setProduct={setProduct}
         editFormVisible={editFormVisible} 
         setEditFormVisible={setEditFormVisible} 
       />

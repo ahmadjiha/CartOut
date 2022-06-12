@@ -1,7 +1,8 @@
-// 
-
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
+
+import { productUpdated } from '../actions/productActions';
 
 const EditForm = ({ 
   product: {
@@ -10,16 +11,17 @@ const EditForm = ({
     price,
     _id    
   },
-  setProduct,
   editFormVisible, 
   setEditFormVisible 
 }) => {
+  const dispatch = useDispatch();
+
   const [itemTitle, setItemTitle] = useState(title);
   const [itemPrice, setItemPrice] = useState(price);
   const [itemQuantity, setItemQuantity] = useState(quantity);
   
   const editFormDisplayValue = () => {
-    return editFormVisible ? "" : "none";
+    return editFormVisible ? '' : 'none';
   }
 
   const handleCancelClick = (e) => {
@@ -43,53 +45,48 @@ const EditForm = ({
   }
 
   const updateItem = async () => { 
-    const update = await axios.put("/api/products/" + _id, {
+    const updatedItem = await axios.put('/api/products/' + _id, {
       title: itemTitle,
       price: itemPrice,
       quantity: itemQuantity
-    })
-    return update 
+    });
+
+    return updatedItem.data;
   }
   
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     try {
-      updateItem()
-      setEditFormVisible(false)
-      let newProduct = {
-        title: itemTitle,
-        price: itemPrice,
-        quantity: itemQuantity,
-        _id: _id
-      }
-      setProduct(newProduct)
+      const updatedItem = await updateItem();
+      dispatch(productUpdated(updatedItem));
+      setEditFormVisible(false);
     } catch (err) {
-      console.log("updateItem failed", err)
-      alert("sorry your update failed because because")
+      console.log('updateItem failed', err)
+      alert('sorry your update failed because because')
     }
   }
 
   return (
-    <div style={{ display: editFormDisplayValue() }} className="edit-form">
+    <div style={{ display: editFormDisplayValue() }} className='edit-form'>
       <h3>Edit Product</h3>
       <form>
-        <div className="input-group">
-          <label htmlFor="product-name">Product Name</label>
-          <input type="text" id="product-name" value={itemTitle} onChange={handleTitleEdit}/>
+        <div className='input-group'>
+          <label htmlFor='product-name'>Product Name</label>
+          <input type='text' id='product-name' value={itemTitle} onChange={handleTitleEdit}/>
         </div>
 
-        <div className="input-group">
-          <label htmlFor="product-price">Price</label>
-          <input type="text" id="product-price" value={itemPrice} onChange={handlePriceEdit} />
+        <div className='input-group'>
+          <label htmlFor='product-price'>Price</label>
+          <input type='text' id='product-price' value={itemPrice} onChange={handlePriceEdit} />
         </div>
 
-        <div className="input-group">
-          <label htmlFor="product-quantity">Quantity</label>
-          <input type="text" id="product-quantity" value={itemQuantity} onChange={handleQuantityEdit}/>
+        <div className='input-group'>
+          <label htmlFor='product-quantity'>Quantity</label>
+          <input type='text' id='product-quantity' value={itemQuantity} onChange={handleQuantityEdit}/>
         </div>
 
-        <div className="actions form-actions">
-          <a href="/#" className="button" onClick={handleUpdate}>Update</a>
-          <a href="/#" className="button" onClick={handleCancelClick}>Cancel</a>
+        <div className='actions form-actions'>
+          <a href='/#' className='button' onClick={handleUpdate}>Update</a>
+          <a href='/#' className='button' onClick={handleCancelClick}>Cancel</a>
         </div>
       </form>
     </div>

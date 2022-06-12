@@ -13,3 +13,10 @@ export const productDeleted = productId => {
     payload: productId
   };
 };
+
+export const productUpdated = updatedProduct => {
+  return {
+    type: 'PRODUCT_UPDATED',
+    payload: updatedProduct
+  };
+};
