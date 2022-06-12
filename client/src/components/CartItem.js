@@ -1,5 +1,6 @@
+// 
 
-const Item = ({ title, quantity, price }) => {
+const CartItem = ({ title, quantity, price }) => {
   return (
     <tr>
       <td>{title}</td>
@@ -9,4 +10,4 @@ const Item = ({ title, quantity, price }) => {
   );
 }
 
-export default Item;
+export default CartItem;

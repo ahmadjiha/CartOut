@@ -72,10 +72,10 @@ const Product = ({
       <p className="price">${price}</p>
       <p className="quantity">{quantity} left in stock</p>
       <div className="actions product-actions">
-        <a className={getAddToCartButtonClass()} onClick={handleAddToCart}>Add to Cart</a>
+        <a href="/#" className={getAddToCartButtonClass()} onClick={handleAddToCart}>Add to Cart</a>
         <a href="/#" className="button edit" onClick={handleEditClick}>Edit</a>
       </div>
-      <a className="delete-button" onClick={handleDeleteClick}><span>X</span></a>
+      <a href="/#" className="delete-button" onClick={handleDeleteClick}><span>X</span></a>
     </div>
   )
 }

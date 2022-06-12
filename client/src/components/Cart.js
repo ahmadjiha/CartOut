@@ -1,4 +1,4 @@
-import Item from './Item';
+import CartItem from './CartItem';
 import axios from 'axios';
 
 const getCartTotal = (items) => items.reduce((prev, curr) => prev + curr.price * curr.quantity, 0)
@@ -8,10 +8,11 @@ const Cart = ({ cartItems, setCartItems }) => {
     const deletedItems = await axios.post("/api/checkout")
     return deletedItems
   }
+  
   const handleCheckout = async (e) => {
     e.preventDefault();
     try {
-      const resp = await checkout() 
+      await checkout()
       setCartItems([])
     } catch (err) {
       console.log("checkout failed: ", err)
@@ -45,7 +46,7 @@ const Cart = ({ cartItems, setCartItems }) => {
             <th>Price</th>
           </tr>
             {cartItems.map( item => (
-              <Item key={item._id} title={item.title} quantity={item.quantity} price={item.price} />
+              <CartItem key={item._id} title={item.title} quantity={item.quantity} price={item.price} />
             ))}
           <tr>
             <td colSpan="3" className="total">Total: ${getCartTotal(cartItems)}</td>
@@ -53,7 +54,7 @@ const Cart = ({ cartItems, setCartItems }) => {
         </tbody>
       </table>
       }
-      <a className={checkoutButtonClass()} onClick={handleCheckout}>Checkout</a>
+      <a href="/#" className={checkoutButtonClass()} onClick={handleCheckout}>Checkout</a>
     </div> 
   );
 }

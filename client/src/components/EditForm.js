@@ -1,7 +1,7 @@
+// 
 
 import { useState } from 'react';
 import axios from 'axios';
-
 
 const EditForm = ({ 
   product: {
@@ -13,13 +13,10 @@ const EditForm = ({
   setProduct,
   editFormVisible, 
   setEditFormVisible 
-}) => 
-{
+}) => {
   const [itemTitle, setItemTitle] = useState(title);
   const [itemPrice, setItemPrice] = useState(price);
   const [itemQuantity, setItemQuantity] = useState(quantity);
-
-
   
   const editFormDisplayValue = () => {
     return editFormVisible ? "" : "none";
@@ -91,8 +88,8 @@ const EditForm = ({
         </div>
 
         <div className="actions form-actions">
-          <a className="button" onClick={handleUpdate}>Update</a>
-          <a className="button" onClick={handleCancelClick}>Cancel</a>
+          <a href="/#" className="button" onClick={handleUpdate}>Update</a>
+          <a href="/#" className="button" onClick={handleCancelClick}>Cancel</a>
         </div>
       </form>
     </div>
