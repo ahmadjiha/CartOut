@@ -11,17 +11,11 @@ const App = () => {
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const { data } = await axios.get('http://localhost:5001/api/products');
-      setItems(data);
-    }
-
     const getCart = async () => {
       const cart = await axios.get('http://localhost:5001/api/cart')
       setCartItems(cart.data);
     }
 
-    getProducts();
     getCart();
   }, []);
 
@@ -37,7 +31,7 @@ const App = () => {
         <Cart cartItems={cartItems} setCartItems={setCartItems} />
       </header>
       <main>
-      <Products products={items} deleteFromItems={deleteFromItems} cartItems={cartItems} setCartItems={setCartItems} />
+      <Products deleteFromItems={deleteFromItems} cartItems={cartItems} setCartItems={setCartItems} />
       <AddProductForm items={items} setItems={setItems} />
       </main>
     </div>
