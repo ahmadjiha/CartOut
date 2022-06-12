@@ -5,14 +5,14 @@ import axios from 'axios';
 import EditableProduct from './EditableProduct';
 import { productsReceived } from '../actions/productActions';
 
-const Products = ({ deleteFromItems, cartItems, setCartItems }) => {
+const Products = ({ cartItems, setCartItems }) => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.products);
 
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await axios.get('/api/products');
-      dispatch(productsReceived(data))
+      dispatch(productsReceived(data));
     }
 
     getProducts();
@@ -27,7 +27,6 @@ const Products = ({ deleteFromItems, cartItems, setCartItems }) => {
           setCartItems={setCartItems}
           key={product._id} 
           product={product}
-          deleteFromItems={deleteFromItems} 
         />
       ))}
     </div>

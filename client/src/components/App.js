@@ -1,10 +1,10 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-import Cart from "./Cart";
-import Products from "./Products";
-import AddProductForm from "./AddProductForm";
+import Cart from './Cart';
+import Products from './Products';
+import AddProductForm from './AddProductForm';
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -19,19 +19,14 @@ const App = () => {
     getCart();
   }, []);
 
-  const deleteFromItems = (id) => {
-    const newItems =  items.filter(item => item._id !== id)
-    setItems(newItems)
-  }
-
   return (
-    <div id="app">
+    <div id='app'>
       <header>
         <h1>The Shop!</h1>
         <Cart cartItems={cartItems} setCartItems={setCartItems} />
       </header>
       <main>
-      <Products deleteFromItems={deleteFromItems} cartItems={cartItems} setCartItems={setCartItems} />
+      <Products cartItems={cartItems} setCartItems={setCartItems} />
       <AddProductForm items={items} setItems={setItems} />
       </main>
     </div>

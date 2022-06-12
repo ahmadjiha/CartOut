@@ -6,3 +6,10 @@ export const productsReceived = products => {
     payload: products
   };
 };
+
+export const productDeleted = productId => {
+  return {
+    type: 'PRODUCT_DELETED',
+    payload: productId
+  };
+};
