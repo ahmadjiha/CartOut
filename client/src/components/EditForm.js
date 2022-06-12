@@ -22,27 +22,27 @@ const EditForm = ({
   
   const editFormDisplayValue = () => {
     return editFormVisible ? '' : 'none';
-  }
+  };
 
   const handleCancelClick = (e) => {
     e.preventDefault();
     setEditFormVisible(false);
-  }
+  };
 
   const handleTitleEdit = (e) => {
-    e.preventDefault()
-    setItemTitle(e.target.value)
-  }
+    e.preventDefault();
+    setItemTitle(e.target.value);
+  };
 
   const handlePriceEdit = (e) => {
-    e.preventDefault()
-    setItemPrice(e.target.value)
-  }
+    e.preventDefault();
+    setItemPrice(e.target.value);
+  };
 
   const handleQuantityEdit = (e) => {
-    e.preventDefault()
-    setItemQuantity(e.target.value)
-  }
+    e.preventDefault();
+    setItemQuantity(e.target.value);
+  };
 
   const updateItem = async () => { 
     const updatedItem = await axios.put('/api/products/' + _id, {
@@ -52,7 +52,7 @@ const EditForm = ({
     });
 
     return updatedItem.data;
-  }
+  };
   
   const handleUpdate = async () => {
     try {
@@ -60,10 +60,10 @@ const EditForm = ({
       dispatch(productUpdated(updatedItem));
       setEditFormVisible(false);
     } catch (err) {
-      console.log('updateItem failed', err)
-      alert('sorry your update failed because because')
+      console.log('updateItem failed', err);
+      alert('Failed to update item');
     }
-  }
+  };
 
   return (
     <div style={{ display: editFormDisplayValue() }} className='edit-form'>
@@ -90,7 +90,7 @@ const EditForm = ({
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
 export default EditForm;

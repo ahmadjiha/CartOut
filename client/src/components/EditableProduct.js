@@ -2,8 +2,7 @@ import { useState } from 'react';
 import Product from './Product';
 import EditForm from './EditForm';
 
-const EditableProduct = ({ product, cartItems, setCartItems }) => {
-  // const [product2, setProduct] = useState(product);
+const EditableProduct = ({ product }) => {
   const [editFormVisible, setEditFormVisible] = useState(false);
 
   return (
@@ -11,9 +10,6 @@ const EditableProduct = ({ product, cartItems, setCartItems }) => {
       <Product
         product={product}
         setEditFormVisible={setEditFormVisible} 
-        setCartItems={setCartItems}
-        cartItems={cartItems}
-        // setProduct={setProduct}
       />
       <EditForm  
         product={product}
@@ -21,7 +17,7 @@ const EditableProduct = ({ product, cartItems, setCartItems }) => {
         setEditFormVisible={setEditFormVisible} 
       />
     </div>
-  )
-}
+  );
+};
 
 export default EditableProduct;

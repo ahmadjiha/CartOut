@@ -1,14 +1,11 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 
-import { productDeleted } from '../actions/productActions';
+import { productDeleted, productAddedToCart } from '../actions/productActions';
 
 const Product = ({
   product: {title, price, quantity, _id},
   setEditFormVisible,
-  cartItems,
-  setCartItems,
-  setProduct
 }) => {
   const dispatch = useDispatch();
 
@@ -18,57 +15,45 @@ const Product = ({
     }
 
     return 'button add-to-cart disabled';
-  }
+  };
   
   const handleEditClick = (e) => {
-    e.preventDefault()
-    setEditFormVisible(true)
-  }
+    e.preventDefault();
+    setEditFormVisible(true);
+  };
 
   const deleteProduct = async (id) => {
-    const deleteOutput = await axios.delete('/api/products/' + id)
-    return deleteOutput
-  }
+    const deleteOutput = await axios.delete('/api/products/' + id);
+    return deleteOutput;
+  };
 
   const handleDeleteClick = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await deleteProduct(_id);
       dispatch(productDeleted(_id));
     } catch (err) {
-      console.log('delete failed: ', err)
-      alert('delete failed')
+      console.log('delete failed: ', err);
+      alert('delete failed');
     }
-  }
+  };
 
   const addProductToCart = async () => {
     const postOutput = await axios.post('/api/add-to-cart', { productId: _id });
-    console.log(postOutput.data)
     return postOutput.data;
-  }
+  };
 
   const handleAddToCart = async (e) => {
     e.preventDefault();
 
     try {
-      const postOutput = await addProductToCart();
-      if (cartItems.some(item => item._id === postOutput.item._id)) {
-        setCartItems(cartItems.map(item => {
-                if (item._id === postOutput.item._id) {
-                  item.quantity += 1;
-                }
-      
-                return item
-              }))
-      } else {
-        setCartItems(cartItems.concat(postOutput.item));
-      }
-      setProduct(postOutput.product)
+      const { product: updatedProduct, item: updatedCartItem } = await addProductToCart();
+      dispatch(productAddedToCart(updatedProduct, updatedCartItem));
     } catch (err) {
       console.log('Update cart item failed', err);
       alert('Update cart item failed');
     }
-  }
+  };
 
   return (
     <div className='product-details'>
@@ -81,7 +66,7 @@ const Product = ({
       </div>
       <a href='/#' className='delete-button' onClick={handleDeleteClick}><span>X</span></a>
     </div>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

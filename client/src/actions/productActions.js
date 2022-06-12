@@ -27,3 +27,13 @@ export const newProductCreated = newProduct => {
     payload: newProduct
   };
 };
+
+export const productAddedToCart = (updatedProduct, updatedCartItem) => {
+  return {
+    type: 'PRODUCT_ADDED_TO_CART',
+    payload: {
+      updatedProduct,
+      updatedCartItem
+    }
+  };
+};

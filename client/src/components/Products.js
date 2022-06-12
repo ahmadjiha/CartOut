@@ -5,7 +5,7 @@ import axios from 'axios';
 import EditableProduct from './EditableProduct';
 import { productsReceived } from '../actions/productActions';
 
-const Products = ({ cartItems, setCartItems }) => {
+const Products = () => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.products);
 
@@ -16,21 +16,19 @@ const Products = ({ cartItems, setCartItems }) => {
     }
 
     getProducts();
-  }, [dispatch])
+  }, [dispatch]);
 
   return (
     <div className='product-listing'>
       <h2>Products</h2>
       {products.map(product => (
         <EditableProduct 
-          cartItems={cartItems}
-          setCartItems={setCartItems}
           key={product._id} 
           product={product}
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
 export default Products;
