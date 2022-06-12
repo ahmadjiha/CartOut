@@ -8,7 +8,7 @@ const Product = ({
   setEditFormVisible,
   cartItems,
   setCartItems,
-  setProduct 
+  setProduct
 }) => {
   const dispatch = useDispatch();
 

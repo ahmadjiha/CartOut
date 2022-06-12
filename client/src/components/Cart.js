@@ -1,9 +1,25 @@
-import CartItem from './CartItem';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+
+import CartItem from './CartItem';
+import { cartItemsReceived } from '../actions/cartActions';
 
 const getCartTotal = (items) => items.reduce((prev, curr) => prev + curr.price * curr.quantity, 0)
 
-const Cart = ({ cartItems, setCartItems }) => {
+const Cart = () => {
+  const dispatch = useDispatch();
+  const cartItems = useSelector(state => state.cartItems);
+
+  useEffect(() => {
+    const getCartItems = async () => {
+      const { data } = await axios.get('http://localhost:5001/api/cart');
+      dispatch(cartItemsReceived(data));
+    }
+
+    getCartItems();
+  }, [dispatch]);
+
   const checkout = async () => {
     const deletedItems = await axios.post("/api/checkout")
     return deletedItems
@@ -13,7 +29,7 @@ const Cart = ({ cartItems, setCartItems }) => {
     e.preventDefault();
     try {
       await checkout()
-      setCartItems([])
+      // setCartItems([])
     } catch (err) {
       console.log("checkout failed: ", err)
       alert("Checkout failed")
