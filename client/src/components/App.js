@@ -1,24 +1,25 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
 import Cart from "./Cart";
 import Products from "./Products";
 import AddProduct from "./AddProduct";
 
-import { productsReceived } from "../actions/productsActions"
+// import { productsReceived } from "../actions/productsActions"
 
 const App = () => {
-  const dispatch = useDispatch();
-  // const [items, setItems] = useState([]);
-  const products = useSelector((state) => state.products);
+  // const dispatch = useDispatch();
+  const [items, setItems] = useState([]);
+  // const products = useSelector((state) => state.products);
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const getProducts = async () => {
       const { data } = await axios.get('http://localhost:5001/api/products');
-      dispatch(productsReceived(data));
+      setItems(data);
+      // dispatch(productsReceived(data));
     }
 
     const getCart = async () => {
@@ -28,11 +29,11 @@ const App = () => {
 
     getProducts();
     getCart();
-  }, [dispatch]);
+  }, []);
 
   const deleteFromItems = (id) => {
-    // const newItems =  items.filter(item => item._id !== id);
-    // setItems(newItems);
+    const newItems =  items.filter(item => item._id !== id)
+    setItems(newItems)
   }
 
   return (
@@ -42,8 +43,8 @@ const App = () => {
         <Cart cartItems={cartItems} setCartItems={setCartItems} />
       </header>
       <main>
-      <Products cartItems={cartItems} setCartItems={setCartItems} />
-      {/* <AddProduct items={items} setItems={setItems} /> */}
+      <Products products={items} deleteFromItems={deleteFromItems} cartItems={cartItems} setCartItems={setCartItems} />
+      <AddProduct items={items} setItems={setItems} />
       </main>
     </div>
   );
